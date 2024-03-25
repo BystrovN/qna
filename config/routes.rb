@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  resources :questions
+  resources :questions do
+    resources :answers, shallow: true, except: %i[show index]
+  end
 end
