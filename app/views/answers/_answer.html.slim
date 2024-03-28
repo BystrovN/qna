@@ -1,0 +1,6 @@
+.answer-container
+  .card.mb-3
+    h3.card-title= answer.body
+
+    - if user_signed_in? && answer.user == current_user
+      = link_to 'Delete', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }

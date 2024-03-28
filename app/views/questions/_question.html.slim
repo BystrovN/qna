@@ -1,0 +1,5 @@
+.col-sm-4
+  .card.mb-3
+    .card-body
+      h5.card-title = link_to question.title, question_path(question), class: 'card-link'
+      p.card-text = truncate(question.body, length: 30)
