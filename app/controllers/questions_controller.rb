@@ -29,15 +29,19 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if question.update(question_params)
-      redirect_to @question
+    if current_user.author_of?(question)
+      if question.update(question_params)
+        redirect_to question
+      else
+        render :edit
+      end
     else
-      render :edit
+      redirect_to question, alert: 'You are not allowed to edit this question.'
     end
   end
 
   def destroy
-    if question.user == current_user
+    if current_user.author_of?(question)
       question.destroy
       redirect_to questions_path, notice: 'Question successfully deleted.'
     else
