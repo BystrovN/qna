@@ -3,4 +3,12 @@
     h3.card-title= answer.body
 
     - if current_user&.author_of?(answer)
-      = link_to 'Delete', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
+      p= link_to 'Delete', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
+      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+      .answer-errors
+        = render 'shared/errors', resource: @answer
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
+        = f.label :body
+        = f.text_area :body
+        = f.submit 'Save'
