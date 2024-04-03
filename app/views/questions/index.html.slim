@@ -3,4 +3,9 @@ h1.text-center.mt-5 All Questions
 = link_to 'Ask question', new_question_path, class: 'btn btn-primary mb-3'
 
 .row
-  = render @questions
+  - @questions.each do |question|
+    .col-sm-4
+      .card.mb-3
+        .card-body
+          h5.card-title = link_to question.title, question_path(question), class: 'card-link'
+          p.card-text = truncate(question.body, length: 30)

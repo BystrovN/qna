@@ -45,12 +45,14 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'when user is the author' do
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
+        expect do
+          delete :destroy, params: { id: answer, question_id: question }, format: :js
+        end.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to question path' do
-        delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to question_path(question)
+      it 'responds with success' do
+        delete :destroy, params: { id: answer, question_id: question }, format: :js
+        expect(response).to be_successful
       end
     end
 
@@ -62,9 +64,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, params: { id: other_answer, question_id: question } }.not_to change(Answer, :count)
       end
 
-      it 'redirects to question path' do
+      it 'returns 403 Forbidden status' do
         delete :destroy, params: { id: other_answer, question_id: question }
-        expect(response).to redirect_to question_path(question)
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

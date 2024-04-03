@@ -8,17 +8,16 @@ class AnswersController < ApplicationController
   end
 
   def update
-    answer.update(answer_params) if current_user.author_of?(answer)
+    return head :forbidden unless current_user.author_of?(answer)
+
+    answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    if current_user.author_of?(answer)
-      answer.destroy
-      redirect_to question_path(answer.question.id), notice: 'Answer successfully deleted.'
-    else
-      redirect_to question_path(answer.question.id), alert: 'You are not allowed to delete this answer.'
-    end
+    return head :forbidden unless current_user.author_of?(answer)
+
+    answer.destroy
   end
 
   private

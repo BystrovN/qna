@@ -1,14 +1,15 @@
 .answer-container
-  .card.mb-3
-    h3.card-title= answer.body
-
-    - if current_user&.author_of?(answer)
-      p= link_to 'Delete', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
-      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-
-      .answer-errors
-        = render 'shared/errors', resource: @answer
-      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
-        = f.label :body
-        = f.text_area :body
-        = f.submit 'Save'
+  div id="answer_#{answer.id}"
+    .card.mb-3
+      h3.card-title= answer.body
+  
+      - if current_user&.author_of?(answer)
+        p= link_to 'Edit', '#', class: 'btn btn-primary edit-answer-link', data: { answer_id: answer.id }
+        p= link_to 'Delete', answer_path(answer), class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: 'Are you sure?' }
+  
+        .answer-errors
+          = render 'shared/errors', resource: @answer
+        = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
+          = f.label :body
+          = f.text_area :body
+          = f.submit 'Save'

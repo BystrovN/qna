@@ -9,7 +9,8 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import jquery from "jquery";
 
-import "../utilities/answers";
+import "../utilities/edit_answer";
+import "../utilities/edit_question";
 
 window.$ = jquery;
 

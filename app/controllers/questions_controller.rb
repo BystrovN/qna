@@ -29,15 +29,9 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(question)
-      if question.update(question_params)
-        redirect_to question
-      else
-        render :edit
-      end
-    else
-      redirect_to question, alert: 'You are not allowed to edit this question.'
-    end
+    return head :forbidden unless current_user.author_of?(question)
+
+    question.update(question_params)
   end
 
   def destroy
