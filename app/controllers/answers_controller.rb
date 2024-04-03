@@ -20,6 +20,13 @@ class AnswersController < ApplicationController
     answer.destroy
   end
 
+  def best
+    return head :forbidden unless current_user.author_of?(answer.question)
+
+    answer.set_best!
+    @question = @answer.question
+  end
+
   private
 
   def question

@@ -101,4 +101,40 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #set_best' do
+    before { login(user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
+    let!(:best_answer) { create(:answer, question: question, user: user, best: true) }
+
+    context 'when user is the author of the question' do
+      it 'sets the answer as the best' do
+        patch :best, params: { id: answer, question_id: question }, format: :js
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'changes the previous best answer to normal' do
+        patch :best, params: { id: answer, question_id: question }, format: :js
+        best_answer.reload
+        expect(best_answer.best).to eq false
+      end
+    end
+
+    context 'when user is not the author of the question' do
+      before { question.update(user: create(:user)) }
+
+      it 'does not set the answer as the best' do
+        patch :best, params: { id: answer, question_id: question }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+
+      it 'does not change the previous best answer' do
+        patch :best, params: { id: answer, question_id: question }, format: :js
+        best_answer.reload
+        expect(best_answer.best).to eq true
+      end
+    end
+  end
 end
