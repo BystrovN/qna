@@ -1,0 +1,13 @@
+.form-group
+  = f.label :title
+  = f.text_field :title, class: 'form-control'
+
+.form-group
+  = f.label :body
+  = f.text_area :body, class: 'form-control'
+
+.form-group
+  = f.label :files
+  = f.file_field :files, multiple: true
+
+= f.submit 'Ask', class: 'btn btn-primary'

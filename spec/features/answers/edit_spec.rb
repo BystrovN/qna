@@ -23,7 +23,7 @@ feature 'User can edit his answer', "
       within '.answers' do
         click_on 'Edit'
         fill_in 'Body', with: 'edited answer'
-        click_on 'Save'
+        click_on 'Answer'
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
@@ -38,7 +38,7 @@ feature 'User can edit his answer', "
       within '.answers' do
         click_on 'Edit'
         fill_in 'Body', with: ''
-        click_on 'Save'
+        click_on 'Answer'
 
         expect(page).to have_content answer.body
         expect(page).to have_selector 'textarea'
@@ -46,7 +46,7 @@ feature 'User can edit his answer', "
       end
     end
 
-    scenario "tries to edit other user's question" do
+    scenario "tries to edit other user's answer" do
       other_user = create(:user)
       other_question = create(:question, user: other_user)
       create(:answer, question: other_question, user: other_user)
@@ -56,6 +56,24 @@ feature 'User can edit his answer', "
 
       within '.answers' do
         expect(page).to_not have_link 'Edit'
+      end
+    end
+
+    scenario 'edits his answer with attached files', js: true do
+      sign_in user
+      visit question_path(question)
+
+      within '.answers' do
+        click_on 'Edit'
+        fill_in 'Body', with: 'edited answer'
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Answer'
+
+        expect(page).to_not have_content answer.body
+        expect(page).to have_content 'edited answer'
+        expect(page).to_not have_selector 'textarea'
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
   end

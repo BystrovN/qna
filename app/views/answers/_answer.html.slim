@@ -6,6 +6,10 @@
 
       h3.card-title= answer.body
 
+      - if answer.files.attached?
+        - answer.files.each do |file|
+          p= link_to file.filename.to_s, url_for(file)
+
       - if current_user&.author_of?(answer.question) && !answer.best
         p= link_to 'Set as best', "/answers/#{answer.id}/set_best", method: :patch, remote: true
   
@@ -16,6 +20,4 @@
         .answer-errors
           = render 'shared/errors', resource: @answer
         = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
-          = f.label :body
-          = f.text_area :body
-          = f.submit 'Save'
+          == render 'shared/partial_form_answer', f: f

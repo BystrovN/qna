@@ -1,0 +1,7 @@
+= f.label :body
+= f.text_area :body, class: 'form-control', rows: 4
+
+= f.label :files
+= f.file_field :files, multiple: true
+
+= f.submit 'Answer', class: 'btn btn-primary mt-3'

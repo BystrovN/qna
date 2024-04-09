@@ -11,6 +11,4 @@
       .answer-errors
         = render 'shared/errors', resource: @answer
       = form_with model: [@question, @answer], class: 'new-answer', local: false, turbo: false do |f|
-        = f.label :body
-        = f.text_area :body, class: 'form-control', rows: 4
-        = f.submit 'Answer', class: 'btn btn-primary mt-3'
+        == render 'shared/partial_form_answer', f: f
