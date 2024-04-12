@@ -76,5 +76,22 @@ feature 'User can edit his answer', "
         expect(page).to have_link 'spec_helper.rb'
       end
     end
+
+    scenario 'delete his answer attached files', js: true do
+      file_name = 'rails_helper.rb'
+      sign_in user
+      answer.files.attach(
+        io: File.open("#{Rails.root}/spec/#{file_name}"),
+        filename: file_name
+      )
+      visit question_path(question)
+
+      within '.answers' do
+        click_on 'Edit'
+        expect(page).to have_link file_name
+        click_on 'X'
+        expect(page).to_not have_link file_name
+      end
+    end
   end
 end

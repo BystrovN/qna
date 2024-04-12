@@ -8,7 +8,11 @@
 
       - if answer.files.attached?
         - answer.files.each do |file|
-          p= link_to file.filename.to_s, url_for(file)
+          div id="file_#{file.id}"
+            p
+              = link_to file.filename.to_s, url_for(file)
+              - if current_user&.author_of?(@question)
+                = link_to 'X',file_path(file), method: :delete, remote: true, class: 'delete-file-link'
 
       - if current_user&.author_of?(answer.question) && !answer.best
         p= link_to 'Set as best', "/answers/#{answer.id}/set_best", method: :patch, remote: true

@@ -7,4 +7,6 @@ Rails.application.routes.draw do
       patch 'set_best', on: :member, to: 'answers#best'
     end
   end
+
+  resources :files, only: :destroy
 end

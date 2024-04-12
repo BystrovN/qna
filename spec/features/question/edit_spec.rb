@@ -80,5 +80,20 @@ feature 'User can edit his question', "
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'delete his question attached files', js: true do
+      file_name = 'rails_helper.rb'
+      sign_in user
+      question.files.attach(
+        io: File.open("#{Rails.root}/spec/#{file_name}"),
+        filename: file_name
+      )
+      visit question_path(question)
+
+      click_on 'Edit'
+      expect(page).to have_link file_name
+      click_on 'X'
+      expect(page).to_not have_link file_name
+    end
   end
 end

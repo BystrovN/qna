@@ -32,3 +32,11 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+yandex:
+  service: S3
+  access_key_id: <%= ENV['YANDEX_BUCKET_ACCESS_KEY_ID'] %>
+  secret_access_key: <%= ENV['YANDEX_BUCKET_SECRET_ACCESS_KEY'] %>
+  bucket: bucketname
+  endpoint: 'https://storage.yandexcloud.net'
+  force_path_style: true
