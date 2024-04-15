@@ -5,6 +5,12 @@
         p.text-success.font-weight-bold Best answer
 
       h3.card-title= answer.body
+        
+      .links
+        p Links:
+        ul
+          - answer.links.each do |link|
+            li = link_to link.name, link.url
 
       - if answer.files.attached?
         - answer.files.each do |file|
