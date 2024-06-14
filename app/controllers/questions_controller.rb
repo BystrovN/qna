@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 
   def show
     question
-    @answer = @question.answers.build
+    @answer = Answer.new(question: @question)
     @answer.links.new
   end
 

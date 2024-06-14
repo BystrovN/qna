@@ -1,29 +1,30 @@
 .answer-container
-  div id="answer_#{answer.id}"
-    .card.mb-3
-      - if answer.best
-        p.text-success.font-weight-bold Best answer
+  div id="answer_#{answer.id}" class="card mb-3"
+    - if answer.best
+      p.text-success.font-weight-bold Best answer
 
-      h3.card-title= answer.body
+    h3.card-title= answer.body
         
-      = render 'shared/link', object: answer
+    = render 'shared/link', object: answer
 
-      - if answer.files.attached?
-        - answer.files.each do |file|
-          div id="file_#{file.id}"
-            p
-              = link_to file.filename.to_s, url_for(file)
-              - if current_user&.author_of?(@question)
-                = link_to 'X',file_path(file), method: :delete, remote: true, class: 'delete-file-link'
+    - if answer.files.attached?
+      - answer.files.each do |file|
+        div id="file_#{file.id}"
+          p
+            = link_to file.filename.to_s, url_for(file)
+            - if current_user&.author_of?(@question)
+              = link_to 'X', file_path(file), method: :delete, remote: true, class: 'delete-link'
 
-      - if current_user&.author_of?(answer.question) && !answer.best
-        p= link_to 'Set as best', "/answers/#{answer.id}/set_best", method: :patch, remote: true
-  
-      - if current_user&.author_of?(answer)
+    - if current_user&.author_of?(answer.question) && !answer.best
+      p= link_to 'Set as best', "/answers/#{answer.id}/set_best", method: :patch, remote: true
+        
+    - if current_user&.author_of?(answer)
+      .btn-group
         p= link_to 'Edit', '#', class: 'btn btn-primary edit-answer-link', data: { answer_id: answer.id }
         p= link_to 'Delete', answer_path(answer), class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: 'Are you sure?' }
-  
-        .answer-errors
-          = render 'shared/errors', resource: @answer
-        = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
-          == render 'shared/partial_form_answer', f: f
+        
+      .answer-errors
+        = render 'shared/errors', resource: @answer
+          
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
+        == render 'shared/partial_form_answer', f: f

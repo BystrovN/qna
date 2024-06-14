@@ -1,9 +1,12 @@
+h4.mt-4 Answer the question
+
 = f.label :body
 = f.text_area :body, class: 'form-control', rows: 4
 
 = f.label :files
-= f.file_field :files, multiple: true
+= f.file_field :files, multiple: true, class: 'form-control'
 
-= render 'shared/link_form', f: f
+p 
+  = render 'shared/link_form', f: f
 
 = f.submit 'Answer', class: 'btn btn-primary mt-3'

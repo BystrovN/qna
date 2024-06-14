@@ -3,14 +3,15 @@
 
   = render @question
 
-  = render 'shared/link', object: @question
+  .row.justify-content-center
+    .col-md-7
+      h4.mt-4 Answers
+      .mt-4.mb-2.answers
+        = render @question.answers
 
-  .mt-4.mb-2.answers
-    = render @question.answers
-
-  - if user_signed_in?
-    .card-body
-      .answer-errors
-        = render 'shared/errors', resource: @answer
-      = form_with model: [@question, @answer], class: 'new-answer', local: false, turbo: false do |f|
-        == render 'shared/partial_form_answer', f: f
+      - if user_signed_in?
+        .card-body
+          .answer-errors
+            = render 'shared/errors', resource: @answer
+          = form_with model: [@question, @answer], class: 'new-answer', local: false, turbo: false do |f|
+            == render 'shared/partial_form_answer', f: f

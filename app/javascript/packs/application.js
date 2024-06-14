@@ -8,9 +8,11 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import jquery from "jquery";
+require("@nathanvda/cocoon")
 
 import "../utilities/edit_answer";
 import "../utilities/edit_question";
+import "../utilities/load_gists";
 
 window.$ = jquery;
 
