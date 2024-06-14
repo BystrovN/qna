@@ -3,11 +3,7 @@
 
   = render @question
 
-  .links
-    p Links:
-    ul
-      - @question.links.each do |link|
-        li = link_to link.name, link.url
+  = render 'shared/link', object: @question
 
   .mt-4.mb-2.answers
     = render @question.answers

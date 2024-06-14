@@ -1,24 +1,3 @@
-# README
+# Question and Answer
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Question and Answer Application, inspired by Stack Overflow. This Ruby on Rails application allows users to post questions and provide answers to others questions, fostering a community of knowledge sharing and problem-solving.
