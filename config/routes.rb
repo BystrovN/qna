@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'rewards/index'
   root to: 'questions#index'
   devise_for :users
 
@@ -10,4 +11,5 @@ Rails.application.routes.draw do
 
   resources :files, only: :destroy
   resources :links, only: :destroy
+  resources :rewards, only: :index
 end

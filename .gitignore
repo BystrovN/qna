@@ -43,3 +43,6 @@ yarn-debug.log*
 .env
 
 /config/database.yml
+
+*.jpeg
+*.jpg

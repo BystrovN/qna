@@ -1,0 +1,10 @@
+.card.mb-3
+  .card-body
+    .reward-form
+      = f.fields_for :reward do |r|
+        .form-group
+          = r.label :title, "Reward title"
+          = r.text_field :title, class: 'form-control'
+        .form-group
+          = r.label :image, "Reward image"
+          = r.file_field :image, class: 'form-control'

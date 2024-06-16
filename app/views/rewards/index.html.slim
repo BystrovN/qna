@@ -1,0 +1,19 @@
+h1 Rewards#index
+
+table.table.table-bordered
+  thead
+    tr
+      th.text-center Question Title
+      th.text-center Reward Title
+      th.text-center Reward Image
+
+  tbody
+    - current_user.rewards.each do |reward|
+      tr
+        td = reward.question.title
+        td = reward.title
+        td
+          - if reward.image.attached?
+            = image_tag reward.image, class: "img-thumbnail"
+          - else
+            | No image available

@@ -6,6 +6,7 @@ feature 'User can create question', "
   I'd like to be able to ask the question
 " do
   given(:user) { create(:user) }
+  given(:reward_title) { 'Awesome reward' }
 
   describe 'Authenticated user' do
     background do
@@ -40,6 +41,25 @@ feature 'User can create question', "
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'asks a question with reward' do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+
+      fill_in 'Reward title', with: reward_title
+      attach_file 'Reward image', "#{Rails.root}/spec/fixtures/test.jpeg"
+
+      click_on 'Ask'
+
+      expect(page).to have_content 'Your question successfully created'
+      expect(page).to have_content 'Test question'
+      expect(page).to have_content 'text text text'
+
+      within '.reward' do
+        expect(page).to have_content reward_title
+        expect(page).to have_css 'img'
+      end
     end
   end
 

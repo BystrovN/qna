@@ -10,6 +10,9 @@
           <li class="nav-item">
             <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link" %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'Rewards', rewards_path, class: "nav-link" %>    
+          </li>
         <% else %>
           <li class="nav-item">
             <%= link_to 'Sign in', new_user_session_path, class: "nav-link" %>
