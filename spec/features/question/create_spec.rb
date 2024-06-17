@@ -48,7 +48,7 @@ feature 'User can create question', "
       fill_in 'Body', with: 'text text text'
 
       fill_in 'Reward title', with: reward_title
-      attach_file 'Reward image', "#{Rails.root}/spec/fixtures/test.jpeg"
+      attach_file 'Reward image', "#{Rails.root}/spec/fixtures/files/test.jpeg"
 
       click_on 'Ask'
 

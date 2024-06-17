@@ -5,11 +5,11 @@ class Reward < ApplicationRecord
   has_one_attached :image
 
   validates :title, presence: true
-  validate :image_is_an_image
+  validate :attachment_content_type
 
   private
 
-  def image_is_an_image
+  def attachment_content_type
     return unless image.attached? && !image.content_type.in?(%w[image/jpeg image/png])
 
     errors.add(:image, 'must be a JPEG or PNG')

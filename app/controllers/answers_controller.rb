@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[show]
+  skip_before_action :authenticate_user!, only: [:show]
 
   def create
     @answer = current_user.answers.build(answer_params)

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'rewards/index'
   root to: 'questions#index'
   devise_for :users
 
