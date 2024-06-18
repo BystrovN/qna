@@ -29,3 +29,6 @@
           = render 'shared/errors', resource: @question
         = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{question.id}" }, local: false, turbo: false do |f|
           == render 'shared/partial_form_question', f: f
+      
+      .question-rating
+        = render 'shared/vote', object: @question

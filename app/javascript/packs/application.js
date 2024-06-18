@@ -13,6 +13,7 @@ require("@nathanvda/cocoon")
 import "../utilities/edit_answer";
 import "../utilities/edit_question";
 import "../utilities/load_gists";
+import "../utilities/votes";
 
 window.$ = jquery;
 

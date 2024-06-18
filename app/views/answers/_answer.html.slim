@@ -24,7 +24,10 @@
         p= link_to 'Delete', answer_path(answer), class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: 'Are you sure?' }
         
       .answer-errors
-        = render 'shared/errors', resource: @answer
+        = render 'shared/errors', resource: answer
           
       = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false, turbo: false do |f|
         == render 'shared/partial_form_answer', f: f
+
+    .answer-rating
+      = render 'shared/vote', object: answer

@@ -1,0 +1,9 @@
+- votable_name = object.class.name.underscore
+
+.votes
+  - if user_signed_in? && !current_user.author_of?(object)
+    .btn-group
+      = button_to '👍', send("vote_up_#{votable_name}_path", object), method: :post, remote: true, data: { type: 'json' }
+      = button_to '👎', send("vote_down_#{votable_name}_path", object), method: :post, remote: true, data: { type: 'json' }
+
+  = render 'shared/rating', object: object
