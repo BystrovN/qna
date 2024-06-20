@@ -8,7 +8,7 @@ module Votable
   def vote_by(user, value)
     vote = votes.find_or_initialize_by(user: user)
     if vote.persisted? && vote.value == value
-      vote.update(value: 0)
+      vote.update!(value: 0)
     else
       vote.value = value
       vote.save
