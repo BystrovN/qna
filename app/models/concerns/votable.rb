@@ -8,7 +8,7 @@ module Votable
   def vote_by(user, value)
     vote = votes.find_or_initialize_by(user: user)
     if vote.persisted? && vote.value == value
-      cancel_vote_by(user)
+      vote.update(value: 0)
     else
       vote.value = value
       vote.save
@@ -17,10 +17,5 @@ module Votable
 
   def rating
     votes.sum(:value)
-  end
-
-  def cancel_vote_by(user)
-    vote = votes.find_by(user: user)
-    vote&.update(value: 0)
   end
 end
