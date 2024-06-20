@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'models/concerns/votable_spec'
 
 RSpec.describe Answer, type: :model do
   it { should belong_to(:question).required }
@@ -9,6 +10,8 @@ RSpec.describe Answer, type: :model do
   it { should accept_nested_attributes_for :links }
 
   it { should validate_presence_of :body }
+
+  it_behaves_like 'votable'
 
   describe '#set_best!' do
     let(:user) { create(:user) }

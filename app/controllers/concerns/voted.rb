@@ -2,7 +2,7 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :find_votable, only: %i[vote_up vote_down cancel_vote]
+    before_action :find_votable, only: %i[vote_up vote_down]
   end
 
   def vote_up
@@ -20,14 +20,10 @@ module Voted
   end
 
   def vote(value)
-    render_vote_result(@votable.vote_by(current_user, value))
-  end
-
-  def render_vote_result(vote_result)
-    if vote_result.success
-      render json: { success: true, rating: vote_result.rating }
+    if @votable.vote_by(current_user, value)
+      render json: { success: true, rating: @votable.rating }
     else
-      render json: { success: false, errors: vote_result.errors }, status: :unprocessable_entity
+      render json: { success: false, errors: @votable.errors.full_messages }, status: :unprocessable_entity
     end
   end
 end
