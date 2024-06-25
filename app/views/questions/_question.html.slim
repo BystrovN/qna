@@ -1,34 +1,34 @@
-.card.mb-4.question
+.card.mb-4.question(data-question-id=question.id)
     .card-body
-      h2.card-title = @question.title
-      p.card-text = @question.body
+      h2.card-title = question.title
+      p.card-text = question.body
 
-      = render 'shared/link', object: @question
+      = render 'shared/link', object: question
 
-      - if @question.files.attached?
-        - @question.files.each do |file|
+      - if question.files.attached?
+        - question.files.each do |file|
           div id="file_#{file.id}"
             p
               = link_to file.filename.to_s, url_for(file)
-              - if current_user&.author_of?(@question)
+              - if current_user&.author_of?(question)
                 = link_to 'X',file_path(file), method: :delete, remote: true, class: 'delete-link'
       
-      - if @question.reward
+      - if question.reward
         .reward
           h5 Reward
-          p = @question.reward.title
-          - if @question.reward.image.attached?
-            = image_tag @question.reward.image
+          p = question.reward.title
+          - if question.reward.image.attached?
+            = image_tag question.reward.image
 
-      - if current_user&.author_of?(@question)
+      - if current_user&.author_of?(question)
         .btn-group
-          = link_to 'Edit', '#', class: 'btn btn-primary edit-question-link', data: { question_id: @question.id }
-          = link_to 'Delete', question_path(@question), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
+          = link_to 'Edit', '#', class: 'btn btn-primary edit-question-link', data: { question_id: question.id }
+          = link_to 'Delete', question_path(question), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
 
         .question-errors
-          = render 'shared/errors', resource: @question
-        = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{question.id}" }, local: false, turbo: false do |f|
+          = render 'shared/errors', resource: question
+        = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" }, local: false, turbo: false do |f|
           == render 'shared/partial_form_question', f: f
       
       .question-rating
-        = render 'shared/vote', object: @question
+        = render 'shared/vote', object: question

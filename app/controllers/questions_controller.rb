@@ -3,6 +3,8 @@ class QuestionsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: %i[index show]
 
+  after_action :publish_question, only: [:create]
+
   def index
     @questions = Question.all
   end
@@ -60,5 +62,11 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(
       :title, :body, files: [], links_attributes: %i[name url _destroy], reward_attributes: %i[title image]
     )
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast('QuestionsChannel', { question: @question })
   end
 end

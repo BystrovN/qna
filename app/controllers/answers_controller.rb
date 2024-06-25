@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:show]
 
+  after_action :publish_answer, only: [:create]
+
   def create
     @answer = current_user.answers.build(answer_params)
     @answer.question = question
@@ -43,5 +45,11 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: %i[name url])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("answers_for_question_#{@question.id}", { answer: @answer, question: @question})
   end
 end

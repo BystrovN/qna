@@ -108,6 +108,11 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    gon (6.4.0)
+      actionpack (>= 3.0.20)
+      i18n (>= 0.7)
+      multi_json
+      request_store (>= 1.0)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.5)
@@ -140,6 +145,7 @@ GEM
     mini_portile2 (2.8.5)
     minitest (5.22.3)
     msgpack (1.7.2)
+    multi_json (1.15.0)
     net-imap (0.4.10)
       date
       net-protocol
@@ -204,6 +210,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.9.0)
+    request_store (1.7.0)
+      rack (>= 1.4)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -303,6 +311,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot_rails
+  gon
   jbuilder (~> 2.7)
   jquery-rails
   launchy
