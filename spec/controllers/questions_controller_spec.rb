@@ -1,8 +1,11 @@
 require 'rails_helper'
+require 'controllers/concerns/commented_spec'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
+
+  it_behaves_like 'commented'
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3, user: user) }

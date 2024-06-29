@@ -1,0 +1,7 @@
+- if user_signed_in?
+  = form_with(model: [commentable, Comment.new], url: polymorphic_path([:add_comment, commentable]), local: false, remote: true ) do |f|
+    .form-group
+      = f.label :body, "Add comment"
+      = f.text_area :body, class: 'form-control', id: "comment_body_#{commentable.class.to_s.downcase}_#{commentable.id}"
+    .form-group
+      = f.submit "Add comment", class: 'btn btn-primary'

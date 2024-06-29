@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   include Voted
+  include Commented
 
   skip_before_action :authenticate_user!, only: [:show]
 
@@ -50,6 +51,6 @@ class AnswersController < ApplicationController
   def publish_answer
     return if @answer.errors.any?
 
-    ActionCable.server.broadcast("answers_for_question_#{@question.id}", { answer: @answer, question: @question})
+    ActionCable.server.broadcast("answers_for_question_#{@question.id}", { answer: @answer, question: @question })
   end
 end

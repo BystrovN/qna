@@ -9,8 +9,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :votable do
-    resources :answers, shallow: true, only: %i[create update destroy], concerns: :votable do
+  concern :commentable do
+    member { post :add_comment }
+  end
+
+  resources :questions, concerns: %i[votable commentable] do
+    resources :answers, shallow: true, only: %i[create update destroy], concerns: %i[votable commentable] do
       patch 'set_best', on: :member, to: 'answers#best'
     end
   end

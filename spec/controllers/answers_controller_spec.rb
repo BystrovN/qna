@@ -1,8 +1,11 @@
 require 'rails_helper'
+require 'controllers/concerns/commented_spec'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
+
+  it_behaves_like 'commented'
 
   describe 'POST #create' do
     context 'when user is authenticated' do

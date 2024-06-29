@@ -1,0 +1,8 @@
+- if object.comments.any?
+  .comment-errors(id="comment-errors-#{object.class.to_s.downcase}-#{object.id}")
+  .comments(data-commentable-type="#{object.class}" data-commentable-id="#{object.id}")
+    h5.mt-3.mb-3 Comments:
+    - object.comments.each do |comment|
+      .card.mb-2
+        .card-body
+          h6.card-text = comment.body

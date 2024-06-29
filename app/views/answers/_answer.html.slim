@@ -31,3 +31,8 @@
 
     .answer-rating
       = render 'shared/vote', object: answer
+
+    = render 'shared/comments', object: answer
+    div id="answer_new_comment#{answer.id}"
+      = render 'shared/comment_form', commentable: answer
+
