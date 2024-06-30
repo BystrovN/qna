@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :comment do
-    body { "MyText" }
-    user { nil }
-    commentable { nil }
+    body { 'MyText' }
+    user
   end
 end

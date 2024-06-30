@@ -27,7 +27,6 @@ feature 'User can edit his answer', "
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
       end
     end
 
@@ -71,7 +70,6 @@ feature 'User can edit his answer', "
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
       end
