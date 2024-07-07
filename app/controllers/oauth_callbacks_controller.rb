@@ -8,7 +8,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    redirect_to root_path, alert: 'Something went wrong'
+    redirect_to root_path, alert: 'Authentication failed'
   end
 
   private
@@ -20,7 +20,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: kind) if is_navigational_format?
     else
-      redirect_to root_path, alert: 'Something went wrong'
+      redirect_to root_path, alert: 'Authentication failed'
     end
   end
 end

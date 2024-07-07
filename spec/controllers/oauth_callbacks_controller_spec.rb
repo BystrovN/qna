@@ -5,22 +5,22 @@ RSpec.describe OauthCallbacksController, type: :controller do
     @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
-  describe 'Github' do
-    let(:oauth_data) { { 'provider' => 'github', 'uid' => 123 } }
+  shared_examples 'OAuth provider' do |provider|
+    let(:oauth_data) { { 'provider' => provider, 'uid' => 123 } }
 
-    it 'finds user from oauth data' do
+    it "finds user from #{provider} oauth data" do
       allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
       expect(User).to receive(:find_for_oauth).with(oauth_data)
-      get :github
+      get provider
     end
 
-    context 'user exists' do
+    context "when user exists for #{provider}" do
       let!(:user) { create(:user) }
 
       before do
         allow(User).to receive(:find_for_oauth).and_return(user)
-        get :github
+        get provider
       end
 
       it 'login user' do
@@ -32,10 +32,10 @@ RSpec.describe OauthCallbacksController, type: :controller do
       end
     end
 
-    context 'user does not exist' do
+    context "when user does not exist for #{provider}" do
       before do
         allow(User).to receive(:find_for_oauth)
-        get :github
+        get provider
       end
 
       it 'redirects to root path' do
@@ -43,51 +43,16 @@ RSpec.describe OauthCallbacksController, type: :controller do
       end
 
       it 'does not login user' do
-        expect(subject.current_user).to_not be
+        expect(subject.current_user).to be_nil
       end
     end
   end
 
+  describe 'Github' do
+    it_behaves_like 'OAuth provider', 'github'
+  end
+
   describe 'Vkontakte' do
-    let(:oauth_data) { { 'provider' => 'vkontakte', 'uid' => 123 } }
-
-    it 'finds user from oauth data' do
-      allow(request.env).to receive(:[]).and_call_original
-      allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
-      expect(User).to receive(:find_for_oauth).with(oauth_data)
-      get :vkontakte
-    end
-
-    context 'user exists' do
-      let!(:user) { create(:user) }
-
-      before do
-        allow(User).to receive(:find_for_oauth).and_return(user)
-        get :vkontakte
-      end
-
-      it 'login user' do
-        expect(subject.current_user).to eq user
-      end
-
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
-      end
-    end
-
-    context 'user does not exist' do
-      before do
-        allow(User).to receive(:find_for_oauth)
-        get :vkontakte
-      end
-
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
-      end
-
-      it 'does not login user' do
-        expect(subject.current_user).to_not be
-      end
-    end
+    it_behaves_like 'OAuth provider', 'vkontakte'
   end
 end

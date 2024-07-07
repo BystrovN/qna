@@ -17,7 +17,13 @@ class FindForOauth
       user = User.create!(email: email, password: password, password_confirmation: password)
     end
 
-    user.create_authorization(auth)
+    create_authorization(user)
     user
+  end
+
+  private
+
+  def create_authorization(user)
+    user.authorizations.create!(provider: auth.provider, uid: auth.uid)
   end
 end

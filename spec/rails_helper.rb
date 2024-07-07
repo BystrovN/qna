@@ -70,6 +70,15 @@ RSpec.configure do |config|
   config.after(:all) do
     FileUtils.rm_rf("#{Rails.root}/tmp/storage")
   end
+
+  config.include(OmniauthMacros)
+
+  OmniAuth.config.test_mode = true
+
+  config.before(:each) do
+    OmniAuth.config.mock_auth[:github] = nil
+    OmniAuth.config.mock_auth[:vkontakte] = nil
+  end
 end
 
 Shoulda::Matchers.configure do |config|
