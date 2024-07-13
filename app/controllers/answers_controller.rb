@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: [:create]
 
+  authorize_resource
+
   def create
     @answer = current_user.answers.build(answer_params)
     @answer.question = question
@@ -13,21 +15,17 @@ class AnswersController < ApplicationController
   end
 
   def update
-    return head :forbidden unless current_user.author_of?(answer)
-
     answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    return head :forbidden unless current_user.author_of?(answer)
-
+    authorize! :destroy, answer
     answer.destroy
   end
 
   def best
-    return head :forbidden unless current_user.author_of?(answer.question)
-
+    authorize! :best, answer
     answer.set_best!
     @question = @answer.question
   end

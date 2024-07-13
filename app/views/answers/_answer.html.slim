@@ -8,17 +8,12 @@
     = render 'shared/link', object: answer
 
     - if answer.files.attached?
-      - answer.files.each do |file|
-        div id="file_#{file.id}"
-          p
-            = link_to file.filename.to_s, url_for(file)
-            - if current_user&.author_of?(@question)
-              = link_to 'X', file_path(file), method: :delete, remote: true, class: 'delete-link'
+      == render 'shared/file', object: answer
 
-    - if current_user&.author_of?(answer.question) && !answer.best
+    - if can?(:best, answer) && !answer.best
       p= link_to 'Set as best', "/answers/#{answer.id}/set_best", method: :patch, remote: true
-        
-    - if current_user&.author_of?(answer)
+
+    - if can?(:update, answer)
       .btn-group
         p= link_to 'Edit', '#', class: 'btn btn-primary edit-answer-link', data: { answer_id: answer.id }
         p= link_to 'Delete', answer_path(answer), class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: 'Are you sure?' }

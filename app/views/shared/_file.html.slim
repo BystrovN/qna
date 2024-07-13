@@ -1,0 +1,6 @@
+- object.files.each do |file|
+  div id="file_#{file.id}"
+    p
+      = link_to file.filename.to_s, url_for(file)
+      - if can?(:destroy, file)
+        = link_to 'X', file_path(file), method: :delete, remote: true, class: 'delete-link'

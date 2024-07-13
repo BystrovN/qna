@@ -5,5 +5,5 @@
       - object.links.each do |link|
         li id="link_#{link.id}"
           = link_to link.name, link.url, class: (link.gist? ? 'gist-link' : '')
-          - if current_user&.author_of?(object)
+          - if can?(:destroy, link)
             = link_to 'X', link_path(link), method: :delete, remote: true, class: 'delete-link'

@@ -1,7 +1,7 @@
 class LinksController < ApplicationController
-  def destroy
-    return head :forbidden unless current_user.author_of?(link.linkable)
+  authorize_resource
 
+  def destroy
     link.destroy
   end
 

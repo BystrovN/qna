@@ -67,9 +67,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, params: { id: other_answer, question_id: question } }.not_to change(Answer, :count)
       end
 
-      it 'returns 403 Forbidden status' do
+      it 'returns 302 redirect status' do
         delete :destroy, params: { id: other_answer, question_id: question }
-        expect(response).to have_http_status(:forbidden)
+        expect(response).to have_http_status(:redirect)
       end
     end
   end

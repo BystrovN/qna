@@ -6,12 +6,7 @@
       = render 'shared/link', object: question
 
       - if question.files.attached?
-        - question.files.each do |file|
-          div id="file_#{file.id}"
-            p
-              = link_to file.filename.to_s, url_for(file)
-              - if current_user&.author_of?(question)
-                = link_to 'X',file_path(file), method: :delete, remote: true, class: 'delete-link'
+        == render 'shared/file', object: question
       
       - if question.reward
         .reward
@@ -20,7 +15,7 @@
           - if question.reward.image.attached?
             = image_tag question.reward.image
 
-      - if current_user&.author_of?(question)
+      - if can?(:update, question)
         .btn-group
           = link_to 'Edit', '#', class: 'btn btn-primary edit-question-link', data: { question_id: question.id }
           = link_to 'Delete', question_path(question), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }

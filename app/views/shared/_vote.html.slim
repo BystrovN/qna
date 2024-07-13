@@ -1,5 +1,5 @@
 .votes
-  - if user_signed_in? && !current_user.author_of?(object)
+  - if can?(:vote_up, object)
     .btn-group
       = button_to '👍', polymorphic_path([:vote_up, object]), method: :post, remote: true, data: { type: 'json' }
       = button_to '👎', polymorphic_path([:vote_down, object]), method: :post, remote: true, data: { type: 'json' }
